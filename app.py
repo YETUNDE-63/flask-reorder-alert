@@ -33,7 +33,7 @@ def predict():
         result = "YES" if prediction == 1 else "NO"
 
         # ✅ Step: Log to CSV (correctly indented)
-        log_file = 'prediction_logs.csv'
+        log_file = '/tmp/prediction_logs.csv'
         log_headers = ['Timestamp', 'Item_Name', 'Opening_Stock_Qty', 'Closing_Stock_Qty', 'Stock_Replenished', 'Prediction']
 
         log_row = [
@@ -74,6 +74,19 @@ def predict():
                                opening=None,
                                closing=None,
                                replenished=None)
+
+@app.route('/download-log')
+def download_log():
+    log_path = '/tmp/prediction_logs.csv'
+    if os.path.exists(log_path):
+        return send_file(
+            log_path,
+            mimetype='text/csv',
+            as_attachment=True,
+            download_name='prediction_logs.csv'
+        )
+    else:
+        return "<h3>No log file available yet.</h3>", 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
