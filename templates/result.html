@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 10px auto 5px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+	.container h2 {
+    	    margin-top: 0;
+	}
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        .alert {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .success {
+            color: #27ae60;
+        }
+
+        .button-group {
+            margin-top: 25px;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #2ecc71;
+        }
+
+        a:hover {
+            background-color: #27ae60;
+        }
+
+        .note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📦 Warehouse Inventory Assistant</h1>
+    </div>
+
+    <div class="container">
+        <h2>Prediction Result</h2>
+
+    	<p><strong>Item:</strong> {{ item }}</p>
+    	<p><strong>Opening Stock Qty:</strong> {{ opening }}</p>
+    	<p><strong>Closing Stock Qty:</strong> {{ closing }}</p>
+    	<p><strong>Stock Replenished:</strong> {{ replenished }}</p>
+
+    <p class="alert {% if prediction == 'NO' %}success{% endif %}">
+        Reorder Alert: {{ prediction }}
+    </p>
+
+    <div class="button-group">
+        <a href="/">🔁 Continue</a>
+    </div>
+
+    <p class="note">✅ You may now close this tab when done.</p>
+    </div>
+
+    </div>
+</body>
+</html>

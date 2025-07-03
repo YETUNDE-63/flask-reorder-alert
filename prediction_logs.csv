@@ -1,0 +1,9 @@
+Timestamp,Item_Name,Opening_Stock_Qty,Closing_Stock_Qty,Stock_Replenished,Prediction
+01/07/2025 13:26,Envelopes Pack,52,12,0,YES
+01/07/2025 13:30,Envelopes Pack,52,12,0,YES
+01/07/2025 13:33,Toner Cartridge Pack,36,18,0,NO
+01/07/2025 13:35,Marker Pack,26,10,0,YES
+01/07/2025 13:35,Printer Ink Bottle,26,24,37,YES
+01/07/2025 13:36,Stapler Piece,38,23,34,YES
+02/07/2025 22:59,Envelopes Pack,52,12,0,YES
+2025-07-02 23:34:12,Envelopes Pack,60,28,6,NO

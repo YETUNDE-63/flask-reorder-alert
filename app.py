@@ -1,0 +1,79 @@
+import pandas as pd
+
+from flask import Flask, render_template, request
+import pickle
+import numpy as np
+from datetime import datetime
+import csv
+import os
+
+# Load model
+with open('reorder_rf_model.pkl', 'rb') as file:
+    model = pickle.load(file)
+
+app = Flask(__name__)
+
+# Home route → form page
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Predict route → handles form submission
+@app.route('/predict', methods=['POST'])
+def predict():
+    try:
+        item = request.form['Item_Name']
+        opening = int(request.form['Opening_Stock_Qty'])
+        closing = int(request.form['Closing_Stock_Qty'])
+        replenished = int(request.form['Stock_Replenished'])
+
+        input_data = pd.DataFrame([[opening, closing, replenished]],
+                                  columns=['Opening_Stock_Qty', 'Closing_Stock_Qty', 'Stock_Replenished'])
+        prediction = model.predict(input_data)[0]
+        result = "YES" if prediction == 1 else "NO"
+
+        # ✅ Step: Log to CSV (correctly indented)
+        log_file = 'prediction_logs.csv'
+        log_headers = ['Timestamp', 'Item_Name', 'Opening_Stock_Qty', 'Closing_Stock_Qty', 'Stock_Replenished', 'Prediction']
+
+        log_row = [
+            datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            item,
+            opening,
+            closing,
+            replenished,
+            result
+        ]
+
+        file_exists = os.path.isfile(log_file)
+
+        with open(log_file, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            if not file_exists:
+                writer.writerow(log_headers)
+            writer.writerow(log_row)
+
+        # ✅ Now render the result page
+        return render_template('result.html',
+                               prediction=result,
+                               item=item,
+                               opening=opening,
+                               closing=closing,
+                               replenished=replenished)
+    except Exception as e:
+        return render_template('result.html',
+                               prediction=f"Error: {e}",
+                               item="(Unknown)",
+                               opening=None,
+                               closing=None,
+                               replenished=None)
+    except Exception as e:
+        return render_template('result.html',
+                               prediction=f"Error: {e}",
+                               item="(Unknown)",
+                               opening=None,
+                               closing=None,
+                               replenished=None)
+
+if __name__ == '__main__':
+    app.run(debug=True)
