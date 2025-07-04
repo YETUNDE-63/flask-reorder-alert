@@ -100,9 +100,12 @@
     </p>
 
 <div class="button-group">
-   <a href="/">🔁 Continue</a>
-   <a href="/download-log">⬇️ Download Log</a>
-   <a href="/admin" style="background-color:#3498db;">🔐 Go to Admin Dashboard</a>
+  <a href="/">🔁 Continue</a>
+  <a href="{{ url_for('download_log') }}">⬇️ Download Log</a>
+</div>
+
+<div class="button-group">
+  <a href="/admin" style="background-color:#3498db;">🔐 Go to Admin Dashboard</a>
 </div>
 
     <p class="note">✅ You may now close this tab when done.</p>
